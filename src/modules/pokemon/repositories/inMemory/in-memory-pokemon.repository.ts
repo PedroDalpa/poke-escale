@@ -14,17 +14,17 @@ export class InMemoryPokemonRepository implements PokemonRepository {
   }
 
   async findByName(name: string): Promise<Pokemon | null> {
-    const pokemon = this.pokemons.find((c) => c.name === name)
+    const pokemon = this.pokemons.find((p) => p.name === name && !p.deletedAt)
     if (!pokemon) return null
     return Promise.resolve(pokemon)
   }
 
   async findAll(): Promise<Pokemon[]> {
-    return Promise.resolve(this.pokemons)
+    return Promise.resolve(this.pokemons.filter((p) => !p.deletedAt))
   }
 
   async findById(id: number): Promise<Pokemon | null> {
-    const pokemon = this.pokemons.find((c) => c.id === id)
+    const pokemon = this.pokemons.find((p) => p.id === id && !p.deletedAt)
     if (!pokemon) return null
     return Promise.resolve(pokemon)
   }

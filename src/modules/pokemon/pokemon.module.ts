@@ -7,6 +7,7 @@ import { PokeApiModule } from '@infra/external/pokemonAPI/pokeApi.module'
 import { ListPokemonsUseCase } from './use-cases/list-pokemons/list-pokemons.use-case'
 import { GetPokemonUseCase } from './use-cases/get-pokemon/get-pokemon.use-case'
 import { UpdatePokemonUseCase } from './use-cases/update-pokemon/update-pokemon.use-case'
+import { DeletePokemonUseCase } from './use-cases/delete-pokemon/delete-pokemon.use-case'
 
 @Module({
   imports: [PokeApiModule],
@@ -19,7 +20,8 @@ import { UpdatePokemonUseCase } from './use-cases/update-pokemon/update-pokemon.
     CreatePokemonUseCase,
     ListPokemonsUseCase,
     GetPokemonUseCase,
-    UpdatePokemonUseCase
+    UpdatePokemonUseCase,
+    DeletePokemonUseCase
   ]
 })
 export class PokemonModule {}

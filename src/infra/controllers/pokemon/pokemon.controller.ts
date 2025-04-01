@@ -1,6 +1,7 @@
 import { UpdatePokemonDto } from '@modules/pokemon/dto/update-pokemon.dto'
 import { Pokemon } from '@modules/pokemon/entities/pokemon.entity'
 import { CreatePokemonUseCase } from '@modules/pokemon/use-cases/create-pokemon/create-pokemon.use-case'
+import { DeletePokemonUseCase } from '@modules/pokemon/use-cases/delete-pokemon/delete-pokemon.use-case'
 import { GetPokemonUseCase } from '@modules/pokemon/use-cases/get-pokemon/get-pokemon.use-case'
 import { ListPokemonsUseCase } from '@modules/pokemon/use-cases/list-pokemons/list-pokemons.use-case'
 import { UpdatePokemonUseCase } from '@modules/pokemon/use-cases/update-pokemon/update-pokemon.use-case'
@@ -12,7 +13,8 @@ import {
   Param,
   Get,
   Patch,
-  Body
+  Body,
+  Delete
 } from '@nestjs/common'
 
 @Controller('pokemon')
@@ -21,7 +23,8 @@ export class PokemonController {
     private readonly createPokemonUseCase: CreatePokemonUseCase,
     private readonly listPokemonsUseCase: ListPokemonsUseCase,
     private readonly getPokemonUseCase: GetPokemonUseCase,
-    private readonly updatePokemonUseCase: UpdatePokemonUseCase
+    private readonly updatePokemonUseCase: UpdatePokemonUseCase,
+    private readonly deletePokemonUseCase: DeletePokemonUseCase
   ) {}
 
   @Post(':name')
@@ -49,5 +52,11 @@ export class PokemonController {
     @Body() pokemon: UpdatePokemonDto
   ): Promise<Pokemon> {
     return this.updatePokemonUseCase.execute(id, pokemon)
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id') id: string): Promise<void> {
+    return this.deletePokemonUseCase.execute(id)
   }
 }
