@@ -28,4 +28,12 @@ export class InMemoryPokemonRepository implements PokemonRepository {
     if (!pokemon) return null
     return Promise.resolve(pokemon)
   }
+
+  async update(updatePokemon: Pokemon): Promise<void> {
+    const index = this.pokemons.findIndex((p) => p.id === updatePokemon.id)
+
+    this.pokemons[index] = updatePokemon
+
+    return Promise.resolve()
+  }
 }

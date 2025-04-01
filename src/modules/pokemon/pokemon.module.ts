@@ -6,6 +6,7 @@ import { InMemoryPokemonRepository } from './repositories/inMemory/in-memory-pok
 import { PokeApiModule } from '@infra/external/pokemonAPI/pokeApi.module'
 import { ListPokemonsUseCase } from './use-cases/list-pokemons/list-pokemons.use-case'
 import { GetPokemonUseCase } from './use-cases/get-pokemon/get-pokemon.use-case'
+import { UpdatePokemonUseCase } from './use-cases/update-pokemon/update-pokemon.use-case'
 
 @Module({
   imports: [PokeApiModule],
@@ -17,7 +18,8 @@ import { GetPokemonUseCase } from './use-cases/get-pokemon/get-pokemon.use-case'
     },
     CreatePokemonUseCase,
     ListPokemonsUseCase,
-    GetPokemonUseCase
+    GetPokemonUseCase,
+    UpdatePokemonUseCase
   ]
 })
 export class PokemonModule {}
