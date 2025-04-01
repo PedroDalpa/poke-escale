@@ -22,4 +22,10 @@ export class InMemoryPokemonRepository implements PokemonRepository {
   async findAll(): Promise<Pokemon[]> {
     return Promise.resolve(this.pokemons)
   }
+
+  async findById(id: number): Promise<Pokemon | null> {
+    const pokemon = this.pokemons.find((c) => c.id === id)
+    if (!pokemon) return null
+    return Promise.resolve(pokemon)
+  }
 }
