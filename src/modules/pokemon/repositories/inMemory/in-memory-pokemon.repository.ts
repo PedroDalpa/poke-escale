@@ -18,4 +18,8 @@ export class InMemoryPokemonRepository implements PokemonRepository {
     if (!pokemon) return null
     return Promise.resolve(pokemon)
   }
+
+  async findAll(): Promise<Pokemon[]> {
+    return Promise.resolve(this.pokemons)
+  }
 }
