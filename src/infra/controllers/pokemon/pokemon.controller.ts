@@ -16,7 +16,9 @@ import {
   Body,
   Delete
 } from '@nestjs/common'
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger'
 
+@ApiTags('pokemon')
 @Controller('pokemon')
 export class PokemonController {
   constructor(
@@ -29,24 +31,50 @@ export class PokemonController {
 
   @Post(':name')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a new Pokemon' })
+  @ApiParam({ name: 'name', description: 'Name of the Pokemon to create' })
+  @ApiResponse({
+    status: 201,
+    description: 'Pokemon created successfully',
+    type: Pokemon
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
   async create(@Param('name') name: string): Promise<Pokemon> {
     return this.createPokemonUseCase.execute(name)
   }
 
   @Get('')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get all Pokemons' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of all Pokemons',
+    type: [Pokemon]
+  })
   async list(): Promise<Pokemon[]> {
     return this.listPokemonsUseCase.execute()
   }
 
   @Get(':value')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get a Pokemon by ID or name' })
+  @ApiParam({ name: 'value', description: 'ID or name of the Pokemon' })
+  @ApiResponse({ status: 200, description: 'Pokemon found', type: Pokemon })
+  @ApiResponse({ status: 404, description: 'Pokemon not found' })
   async get(@Param('value') value: string): Promise<Pokemon> {
     return this.getPokemonUseCase.execute(value)
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Update a Pokemon' })
+  @ApiParam({ name: 'id', description: 'ID of the Pokemon to update' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pokemon updated successfully',
+    type: Pokemon
+  })
+  @ApiResponse({ status: 404, description: 'Pokemon not found' })
   async update(
     @Param('id') id: string,
     @Body() pokemon: UpdatePokemonDto
@@ -56,6 +84,10 @@ export class PokemonController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete a Pokemon' })
+  @ApiParam({ name: 'id', description: 'ID of the Pokemon to delete' })
+  @ApiResponse({ status: 204, description: 'Pokemon deleted successfully' })
+  @ApiResponse({ status: 404, description: 'Pokemon not found' })
   async delete(@Param('id') id: string): Promise<void> {
     return this.deletePokemonUseCase.execute(id)
   }
