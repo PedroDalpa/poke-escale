@@ -4,7 +4,7 @@ import { PokemonModule } from '@modules/pokemon/pokemon.module'
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://admin:password@localhost:27017'),
+    MongooseModule.forRoot('mongodb://admin:password@mongodb:27017'),
     PokemonModule
   ]
 })
